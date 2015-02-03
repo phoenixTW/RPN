@@ -12,13 +12,13 @@ int evaluate(String expression) {
 	Stack stack = createStack();
 
 	while(expression[count] != '\0') {
-		if(expression[count] != 32 && expression[count] >= 48){
+		if(isOpearands(expression[count])){
 			data = (void*)malloc(sizeof(int), 1);
 			*data = toDigit(expression[count]);
 			push(&stack, data);
 		}
 
-		if((expression[count] >= '*') && (expression[count] <= '/')){
+		if(isOperator(expression[count])){
 			value1 = *(int*)pop(&stack);
 			value2 = *(int*)pop(&stack);
 			data = (void*)malloc(sizeof(int), 1);
@@ -30,6 +30,14 @@ int evaluate(String expression) {
 	}
 
 	return *(int*)pop(&stack);
+}
+
+int isOpearands (char character) {
+	return (character != 32 && character >= 48) ? 1 : 0;
+}
+
+int isOperator (char character) {
+	return ((character >= '*') && (character <= '/') && (character != ',')) ? 1 : 0;
 }
 
 int toDigit(char character) {

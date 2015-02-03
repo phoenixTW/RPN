@@ -64,3 +64,10 @@ void test_evaluate_should_return_1_for_2_minus_1_plus_2_div_3 () {
 	assertEqual((int*)evaluate(expression), 1);
 	free(expression);
 }
+
+void test_evaluate_should_return_1_for_2_minus_1_plus_2_div_3_with_lots_of_spaces () {
+	String expression = calloc(sizeof(char), 256);
+	strcpy(expression, "3 2 1   2 - + /");
+	assertEqual((int*)evaluate(expression), 1);
+	free(expression);
+}
