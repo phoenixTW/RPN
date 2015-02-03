@@ -1,1 +1,5 @@
-#include "source/stackLib.h"
+#include "stackLib.h"
+
+typedef char* String;
+
+int evaluate(String);
