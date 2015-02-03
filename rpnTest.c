@@ -25,7 +25,7 @@ void test_evaluate_should_return_5_for_2_plus_1_plus_2 () {
 
 void test_evaluate_should_return_1_for_2_minus_1 () {
 	String expression = calloc(sizeof(char), 256);
-	strcpy(expression, "1 2 -");
-	assertEqual(evaluate(expression), 1);
+	strcpy(expression, "2 1 2 - +");
+	assertEqual(evaluate(expression), 3);
 	free(expression);
 }
