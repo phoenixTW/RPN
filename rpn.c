@@ -2,6 +2,7 @@
 
 int add(int, int);
 int multiply(int, int);
+int divide(int, int);
 int toDigit(char);
 int operation(int, int, char);
 int substract(int, int);
@@ -40,6 +41,7 @@ int operation(int value1, int value2, char operator){
 	operator == '+' && (result = add(value1, value2));
 	operator == '-' && (result = substract(value1, value2));
 	operator == '*' && (result = multiply(value1, value2));
+	operator == '/' && (result = divide(value1, value2));
 	return result;
 }
 
@@ -54,4 +56,8 @@ int substract (int oparand1, int oparand2){
 
 int multiply (int oparand1, int oparand2){
 	return oparand2 * oparand1;
+}
+
+int divide (int oparand1, int oparand2){
+	return oparand1 / oparand2;
 }
