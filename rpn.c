@@ -59,7 +59,7 @@ int add (int operand1, int operand2) {
 }
 
 int substract (int oparand1, int oparand2){
-	return oparand2 - oparand1;
+	return oparand1 - oparand2;
 }
 
 int multiply (int oparand1, int oparand2){
