@@ -85,3 +85,24 @@ void test_evaluate_should_return_14_for_5_1_2_plus_4_mul_plus_3 () {
 	assertEqual((int*)evaluate(expression), 14);
 	free(expression);
 }
+
+void test_evaluate_should_return_7_for_2_2_2_mul_2_sub_3_plus_plus () {
+	String expression = calloc(sizeof(char), 256);
+	strcpy(expression, "2 2 2 * 2 - 3 + +");
+	assertEqual((int*)evaluate(expression), 7);
+	free(expression);
+}
+
+void test_evaluate_should_return_7_for_2_2_2_2_2_mul_mul_2_plus_plus_2_sub_mul () {
+	String expression = calloc(sizeof(char), 256);
+	strcpy(expression, "2 2 2 2 2 * * 2 + + 2 - *");
+	assertEqual((int*)evaluate(expression), 20);
+	free(expression);
+}
+
+void test_evaluate_should_return_0_for_2_2_sub_2_2_2_mul_2_sub_sub_sub () {
+	String expression = calloc(sizeof(char), 256);
+	strcpy(expression, "2 2 - 2 2 2 * 2 - - -");
+	assertEqual((int*)evaluate(expression), 0);
+	free(expression);
+}
