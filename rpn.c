@@ -1,39 +1,46 @@
 #include "rpn.h"
-
+#include <stdlib.h>
 int add(int, int);
 int multiply(int, int);
 int divide(int, int);
 int toDigit(char);
 int operation(int, int, char);
 int substract(int, int);
+int isOpearands(char);
+int isOperator(char);
 
-int evaluate(String expression) {
+Result evaluate(String expression) {
 	int count = 0, value, *data, value1, value2;
 	Stack stack = createStack();
 
 	while(expression[count] != '\0') {
 		if(isOpearands(expression[count])){
-			data = (void*)malloc(sizeof(int), 1);
+			data = (void*)malloc(sizeof(int) * 1);
 			*data = toDigit(expression[count]);
 			push(&stack, data);
 		}
 
 		if(isOperator(expression[count])){
-			value1 = *(int*)pop(&stack);
-			value2 = *(int*)pop(&stack);
-			data = (void*)malloc(sizeof(int), 1);
-			*data = operation(value2, value1, expression[count]);//add(value2, value1);
+			value1 = pop(&stack);
+			value2 = pop(&stack);
+
+			if((value1 == -1) || (value2 == -1)) return (Result){0, NULL};
+			
+			data = (void*)malloc(sizeof(int) * 1);
+			*data = operation(*(int*)value2, *(int*)value1, expression[count]);//add(value2, value1);
 			push(&stack, data);
 		}
 
 		count++;
 	}
 
-	return *(int*)pop(&stack);
+	if(stack.list->count > 1) return (Result){0, NULL};
+
+	return (Result){1, *(int*)pop(&stack)};
 }
 
 int isOpearands (char character) {
-	return (character != 32 && character >= 48) ? 1 : 0;
+	return (character != 32 && character >= '0' && character <= '9') ? 1 : 0;
 }
 
 int isOperator (char character) {
