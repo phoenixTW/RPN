@@ -22,7 +22,7 @@ int divide(int, int);
 int toDigit(char);
 int operation(int, int, char);
 int substract(int, int);
-int isOpearands(char);
+int isOperand(char);
 int isOperator(char);
 int isWhiteSpace (char);
 Result perform(Stack, String);

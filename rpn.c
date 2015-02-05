@@ -68,7 +68,7 @@ int getValue(String expression, int start, int end) {
 void generateToken (LinkedList *list, String expression) {
 	int count = 0, type, start = -1, end = -1;
 	while(expression[count] != '\0') {
-		if(isOpearands(expression[count])) type = 1;
+		if(isOperand(expression[count])) type = 1;
 		if(isOperator(expression[count])) type = 2;
 		if(isWhiteSpace(expression[count])) type = 0;
 
@@ -99,7 +99,7 @@ int isWhiteSpace(char character) {
 	return character == ' ';
 }
 
-int isOpearands (char character) {
+int isOperand (char character) {
 	return (character != ' ' && character >= '0' && character <= '9') ? 1 : 0;
 }
 

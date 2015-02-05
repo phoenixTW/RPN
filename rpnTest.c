@@ -171,11 +171,11 @@ void test_evaluate_should_return_negative_1_for_too_many_opearands () {
 }
 
 void test_isOperands_should_return_1_for_2 () {
-	assertEqual(isOpearands('2'), 1);
+	assertEqual(isOperand('2'), 1);
 }
 
 void test_isOperands_should_return_0_for_a () {
-	assertEqual(isOpearands('a'), 0);
+	assertEqual(isOperand('a'), 0);
 }
 
 void test_isOperator_should_return_1_for_plus () {
