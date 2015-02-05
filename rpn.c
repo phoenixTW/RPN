@@ -1,48 +1,7 @@
 #include "rpn.h"
 #include <stdlib.h>
 
-int add(int, int);
-int multiply(int, int);
-int divide(int, int);
-int toDigit(char);
-int operation(int, int, char);
-int substract(int, int);
-int isOpearands(char);
-int isOperator(char);
-int isWhiteSpace (char);
-Result perform(Stack, String);
-void generateToken(LinkedList*, String);
-Token* create_token(int, int, int);
-Result calculate(LinkedList*, String, Stack);
-
 Result evaluate(String expression) {
-	// int count = 0, value, *data, value1, value2;
-	// Stack stack = createStack();
-
-	// while(expression[count] != '\0') {
-	// 	if(isOpearands(expression[count])){
-	// 		data = (void*)malloc(sizeof(int) * 1);
-	// 		*data = toDigit(expression[count]);
-	// 		push(&stack, data);
-	// 	}
-
-	// 	if(isOperator(expression[count])){
-	// 		value1 = pop(&stack);
-	// 		value2 = pop(&stack);
-
-	// 		if((value1 == -1) || (value2 == -1)) return (Result){0, NULL};
-			
-	// 		data = (void*)malloc(sizeof(int) * 1);
-	// 		*data = operation(*(int*)value2, *(int*)value1, expression[count]);//add(value2, value1);
-	// 		push(&stack, data);
-	// 	}
-
-	// 	count++;
-	// }
-
-	// if(stack.list->count > 1) return (Result){0, NULL};
-
-	// return (Result){1, *(int*)pop(&stack)};
 	Stack stack = createStack();
 	Result res = perform(stack, expression);
 	return res;
@@ -58,19 +17,8 @@ Result perform(Stack stack, String expression) {
 	int count, *data;
 	LinkedList list = createList();
 	generateToken(&list, expression);
-
-	// printf("%d\n", ((Token*)(list.head->data))->type);
 	return calculate(&list, expression, stack);
-	// return (Result){1, 0};
 }
-	// 		value1 = pop(&stack);
-	// 		value2 = pop(&stack);
-
-	// 		if((value1 == -1) || (value2 == -1)) return (Result){0, NULL};
-			
-	// 		data = (void*)malloc(sizeof(int) * 1);
-	// 		*data = operation(*(int*)value2, *(int*)value1, expression[count]);//add(value2, value1);
-	// 		push(&stack, data);
 
 Result calculate (LinkedList *list, String expression, Stack stack) {
 	Node_ptr walker = list->head;
