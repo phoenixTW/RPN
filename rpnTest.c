@@ -220,7 +220,7 @@ void test_perform_should_return_error_for_1_1_plus_plus () {
 	assertEqual(res.result, 0x0);
 }
 
-void test_should_create_a_list_of_tokens () {
+void test_generateToken_should_create_a_list_of_tokens () {
 	LinkedList list = createList();
 	String expr = "1 1 +";
 	generateToken(&list, expr);

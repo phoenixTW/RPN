@@ -1,6 +1,7 @@
 #include "rpn.h"
 #include <stdlib.h>
 
+Result calculate(LinkedList*, String, Stack); //Local Function, need to be test later
 Result evaluate(String expression) {
 	Stack stack = createStack();
 	Result res = perform(stack, expression);
