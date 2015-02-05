@@ -24,6 +24,7 @@ Result calculate (LinkedList *list, String expression, Stack stack) {
 	Node_ptr walker = list->head;
 	int *value, data1, data2;
 	char op;
+
 	while(walker != NULL) {
 		if(((Token*)walker->data)->type == 1){
 			value = (void*)malloc(sizeof(int));
@@ -56,6 +57,7 @@ int getValue(String expression, int start, int end) {
 	int count, result = 0;
 
 	if(isOperator(expression[start])) return expression[start];
+
 	for(count = start; count <= end; count++) {
 		result = result * 10 + (expression[count] - '0');
 	}
