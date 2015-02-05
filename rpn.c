@@ -77,7 +77,6 @@ Result calculate (LinkedList *list, String expression, Stack stack) {
 	int *value, data1, data2;
 	char op;
 	while(walker != NULL) {
-
 		if(((Token*)walker->data)->type == 1){
 			value = (void*)malloc(sizeof(int));
 			*value = getValue(expression, ((Token*)walker->data)->start, ((Token*)walker->data)->end);
@@ -87,6 +86,9 @@ Result calculate (LinkedList *list, String expression, Stack stack) {
 		if(((Token*)walker->data)->type == 2) {
 			data1 = pop(&stack);
 			data2 = pop(&stack);
+			
+			if((data1 == -1) || (data2 == -1)) return (Result){0, NULL};
+			
 			op = getValue(expression, ((Token*)walker->data)->start, ((Token*)walker->data)->end);
 			value = malloc(sizeof(int));
 			*value = operation(*(int*)data2, *(int*)data1, op);
@@ -96,6 +98,8 @@ Result calculate (LinkedList *list, String expression, Stack stack) {
 
 		walker = walker->next;
 	}
+
+	if(stack.list->count > 1) return (Result){0, NULL};
 
 	return (Result){1, *(int*)pop(&stack)};
 }
@@ -119,8 +123,8 @@ void generateToken (LinkedList *list, String expression) {
 		if(isWhiteSpace(expression[count])) type = 0;
 
 		if(start == -1) start = count;
-		if(expression[count + 1] == '\0' || isWhiteSpace(expression[count + 1] || type != 0)) end = count;
-		else end = count;
+		if(isWhiteSpace(expression[count + 1]) || expression[count + 1] == '\0') end = count;
+		if(expression[count + 1] == ' ' || expression[count] == ' ') end = count; 
 
 		if(start != -1 && end != -1) {
 			add_to_list(list, create_node(create_token(type, start, end)));
