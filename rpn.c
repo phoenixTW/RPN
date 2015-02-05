@@ -100,7 +100,7 @@ int isWhiteSpace(char character) {
 }
 
 int isOpearands (char character) {
-	return (character != 32 && character >= '0' && character <= '9') ? 1 : 0;
+	return (character != ' ' && character >= '0' && character <= '9') ? 1 : 0;
 }
 
 int isOperator (char character) {
