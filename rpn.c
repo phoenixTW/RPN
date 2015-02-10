@@ -4,6 +4,7 @@
 Result calculate(LinkedList*, String, Stack); //Local Function, need to be test later
 String generateExpression (Stack, Queue);
 String stringifyQueue (Queue);
+String stringifyStack (Stack);
 
 Result evaluate(String expression) {
 	Stack stack = createStack();
@@ -151,20 +152,19 @@ String infixToPostfix (String expression) {
 
 String toPostfix (LinkedList *list, String expression, Stack stack, Queue q) {
 	Node_ptr walker = list->head;
-	int *value;
-	String expr;
+	String value, expr, operatorValue;
 
 	while(walker != NULL) {
 		if(((Token*)walker->data)->type == 1){
-			value = (void*)malloc(sizeof(int));
-			*value = getValue(expression, ((Token*)walker->data)->start, ((Token*)walker->data)->end);
+			value = malloc(sizeof(char));
+			value = getOperand(expression, ((Token*)walker->data)->start, ((Token*)walker->data)->end);
 			enqueue(&q, value);
 		}
 
 		if(((Token*)walker->data)->type == 2) {
-			value = (void*)malloc(sizeof(int));
-			*value = getValue(expression, ((Token*)walker->data)->start, ((Token*)walker->data)->end);
-			push(&stack, value);			
+			operatorValue = calloc(sizeof(int), 1);
+			*operatorValue = getValue(expression, ((Token*)walker->data)->start, ((Token*)walker->data)->end);
+			push(&stack, operatorValue);			
 		}
 
 		walker = walker->next;
@@ -177,31 +177,38 @@ String toPostfix (LinkedList *list, String expression, Stack stack, Queue q) {
 	return expr;
 }
 
+String getOperand(String expression, int start, int end) {
+	int length = (end - start) + 1, count = 0, i;
+	String value = calloc(sizeof(char), length + 1);
+
+	for(i = start; i <= end; i++) {
+		value[count] = expression[i];
+		count++;
+	}	
+
+	return value;
+}
+
+
 String generateExpression (Stack stack, Queue q) {
-	String expr = stringifyQueue(q);
-	String stackExpr = stringifyStack(stack);
+	String expr = stringifyQueue(q), stackExpr = stringifyStack(stack);
+	printf("%s\n", expr);
 	return strcat(expr, stackExpr);
 }
 
 String stringifyQueue (Queue q) {
-	Node_ptr walker = *(q.front);
-	String queueExpr = (String)malloc(sizeof(char) * (q.list->count + 1));
-	int counter = -1;
-
-	while (walker != NULL) {
-		queueExpr[++counter] = '0' + *(int*)dequeue(&q);
-		walker = walker->next;
-
-		if(walker != NULL) queueExpr[++counter] = ' ';
+	String expression = calloc(sizeof(char), (q.list->count)), op;
+	while(q.list->count > 0){
+		op = *(String*)dequeue(&q);
+		strcat(expression, op);
+		strcat(expression," ");
 	}
 
-	queueExpr[++counter] = '\0';
-	return queueExpr;
-
+	return expression;
 }
 
 String stringifyStack (Stack stack) {
-	String stackExpr = (String)malloc(sizeof(char) * (stack.list->count + 1));
+	String stackExpr = (String)calloc(sizeof(char), (stack.list->count + 1));
 	int counter = -1;
 
 	while (stack.list->count > 0) {
@@ -209,6 +216,5 @@ String stringifyStack (Stack stack) {
 		stackExpr[++counter] = *(char*)pop(&stack);
 	}
 
-	stackExpr[++counter] = '\0';
 	return stackExpr;
 }

@@ -229,11 +229,11 @@ void test_generateToken_should_create_a_list_of_tokens () {
 	assertEqual(((Token*)list.head->next->next->next->next->data)->type, 2);
 }
 
-void test_infixToPostfix_should_return_3_4_plus_for_3_plus_4 () {
-	LinkedList list = createList();
-	String expr = "3 + 4";
-	assertEqual(strcmp(infixToPostfix(expr), "3 4 +"), 0);
-}
+// void test_infixToPostfix_should_return_3_4_plus_for_3_plus_4 () {
+// 	LinkedList list = createList();
+// 	String expr = "3 + 4";
+// 	assertEqual(strcmp(infixToPostfix(expr), "3 4 +"), 0);
+// }
 
 // void test_infixToPostfix_should_return_30_4_plus_for_30_plus_4 () {
 // 	LinkedList list = createList();
@@ -241,18 +241,27 @@ void test_infixToPostfix_should_return_3_4_plus_for_3_plus_4 () {
 // 	assertEqual(strcmp(infixToPostfix(expr), "30 4 +"), 0);
 // }
 
-void test_infixToPostfix_should_return_3_4_5_plus_plus_for_3_plus_4_plus_5 () {
-	LinkedList list = createList();
-	String expr = "3 + 4 + 5";
-	assertEqual(strcmp(infixToPostfix(expr), "3 4 5 + +"), 0);
-}
+// void test_infixToPostfix_should_return_3_4_5_plus_plus_for_3_plus_4_plus_5 () {
+// 	LinkedList list = createList();
+// 	String expr = "3 + 4 + 5";
+// 	assertEqual(strcmp(infixToPostfix(expr), "3 4 5 + +"), 0);
+// }
 
 void test_stringifyQueue_should_return_1_1_for_a_queue_with_two_element_1_and_1 () {
 	Queue q = createQueue();
-	int data1 = 1, data2 = 1;
+	String data1 = "1", data2 = "1";
 	assertEqual(enqueue(&q, &data1), 1);
 	assertEqual(enqueue(&q, &data2), 2);
-	assertEqual(strcmp(stringifyQueue(q), "1 1"), 0);
+	assertEqual(strcmp(stringifyQueue(q), "1 1 "), 0);
+	free(q.list);	
+}
+
+void test_stringifyQueue_should_return_10_1_for_a_queue_with_two_element_10_and_1 () {
+	Queue q = createQueue();
+	String data1 = "10", data2 = "1";
+	assertEqual(enqueue(&q, &data1), 1);
+	assertEqual(enqueue(&q, &data2), 2);
+	assertEqual(strcmp(stringifyQueue(q), "10 1 "), 0);
 	free(q.list);	
 }
 
@@ -261,5 +270,14 @@ void test_stringifyStack_should_return_plus_for_a_stack_with_one_element_plus_op
 	char data1 = '+';
 	assertEqual(push(&operators, &data1), 1);
 	assertEqual(strcmp(stringifyStack(operators), " +"), 0);
+	free(operators.list);	
+}
+
+void test_stringifyStack_should_return_plus_plus_for_a_stack_with_two_element_plus_operator () {
+	Queue operators = createQueue();
+	char data1 = '+', data2 = '+';
+	assertEqual(push(&operators, &data1), 1);
+	assertEqual(push(&operators, &data2), 2);
+	assertEqual(strcmp(stringifyStack(operators), " + +"), 0);
 	free(operators.list);	
 }
