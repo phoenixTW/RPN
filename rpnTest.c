@@ -269,7 +269,7 @@ void test_stringifyStack_should_return_plus_for_a_stack_with_one_element_plus_op
 	Queue operators = createQueue();
 	char data1 = '+';
 	assertEqual(push(&operators, &data1), 1);
-	assertEqual(strcmp(stringifyStack(operators), " +"), 0);
+	assertEqual(strcmp(stringifyStack(operators), "+"), 0);
 	free(operators.list);	
 }
 
@@ -278,6 +278,53 @@ void test_stringifyStack_should_return_plus_plus_for_a_stack_with_two_element_pl
 	char data1 = '+', data2 = '+';
 	assertEqual(push(&operators, &data1), 1);
 	assertEqual(push(&operators, &data2), 2);
-	assertEqual(strcmp(stringifyStack(operators), " + +"), 0);
+	assertEqual(strcmp(stringifyStack(operators), "+ +"), 0);
 	free(operators.list);	
+}
+
+void test_generateExpression_should_return_1_1_plus_for_1_plus_1 () {
+	Queue q = createQueue();
+	Stack stack = createStack();
+
+	String data1 = "1", data2 = "1";
+	char data3 = '+';
+	assertEqual(enqueue(&q, &data1), 1);
+	assertEqual(enqueue(&q, &data2), 2);	
+	assertEqual(push(&stack, &data3), 1);
+
+	assertEqual(strcmp(generateExpression(stack, q), "1 1 +"), 0);
+
+	free(q.list);
+	free(stack.list);
+}
+
+void test_generateExpression_should_return_10_1_plus_for_10_plus_1 () {
+	Queue q = createQueue();
+	Stack stack = createStack();
+
+	String data1 = "10", data2 = "1";
+	char data3 = '+';
+	assertEqual(enqueue(&q, &data1), 1);
+	assertEqual(enqueue(&q, &data2), 2);	
+	assertEqual(push(&stack, &data3), 1);
+
+	assertEqual(strcmp(generateExpression(stack, q), "10 1 +"), 0);
+
+	free(q.list);
+	free(stack.list);
+}
+
+void test_getOperand_should_return_3_for_3_plus_4 () {
+	String expression = "3 + 4";
+	assertEqual(strcmp(getOperand(expression, 0, 0), "3"), 0);	
+}
+
+void test_getOperand_should_return_4_for_3_plus_4 () {
+	String expression = "3 + 4";
+	assertEqual(strcmp(getOperand(expression, 4, 4), "4"), 0);	
+}
+
+void test_getOperand_should_return_40_for_3_plus_40 () {
+	String expression = "3 + 40";
+	assertEqual(strcmp(getOperand(expression, 4, 5), "40"), 0);	
 }

@@ -164,21 +164,21 @@ String toPostfix (LinkedList *list, String expression, Stack stack, Queue q) {
 		if(((Token*)walker->data)->type == 2) {
 			operatorValue = calloc(sizeof(int), 1);
 			*operatorValue = getValue(expression, ((Token*)walker->data)->start, ((Token*)walker->data)->end);
-			push(&stack, operatorValue);			
+			push(&stack, operatorValue);
 		}
 
 		walker = walker->next;
 	}
-	
+
 	expr = generateExpression(stack, q);
 
-	// printf("%s\n", expr);
+	printf("%s\n", expr);
 
 	return expr;
 }
 
 String getOperand(String expression, int start, int end) {
-	int length = (end - start) + 1, count = 0, i;
+	int length = (end - start) + 2, count = 0, i;
 	String value = calloc(sizeof(char), length + 1);
 
 	for(i = start; i <= end; i++) {
@@ -192,28 +192,32 @@ String getOperand(String expression, int start, int end) {
 
 String generateExpression (Stack stack, Queue q) {
 	String expr = stringifyQueue(q), stackExpr = stringifyStack(stack);
-	printf("%s\n", expr);
+	// printf("%s\n", expr);
 	return strcat(expr, stackExpr);
 }
 
 String stringifyQueue (Queue q) {
-	String expression = calloc(sizeof(char), (q.list->count)), op;
+	String expression = calloc(sizeof(String), (q.list->count)), op;
+
 	while(q.list->count > 0){
 		op = *(String*)dequeue(&q);
+		// printf("------%s\n", op);
 		strcat(expression, op);
-		strcat(expression," ");
+		strcat(expression, " ");
 	}
+
+	// printf("%s\n", expression);
 
 	return expression;
 }
 
 String stringifyStack (Stack stack) {
-	String stackExpr = (String)calloc(sizeof(char), (stack.list->count + 1));
+	String stackExpr = (String)calloc(sizeof(char), (stack.list->count));
 	int counter = -1;
 
 	while (stack.list->count > 0) {
-		stackExpr[++counter] = ' ';
 		stackExpr[++counter] = *(char*)pop(&stack);
+		if(stack.list->count > 0) stackExpr[++counter] = ' ';
 	}
 
 	return stackExpr;
