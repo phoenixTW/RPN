@@ -152,12 +152,12 @@ String infixToPostfix (String expression) {
 
 String toPostfix (LinkedList *list, String expression, Stack stack, Queue q) {
 	Node_ptr walker = list->head;
-	String value, expr, operatorValue;
+	String *value, expr, operatorValue;
 
 	while(walker != NULL) {
 		if(((Token*)walker->data)->type == 1){
-			value = malloc(sizeof(char));
-			value = getOperand(expression, ((Token*)walker->data)->start, ((Token*)walker->data)->end);
+			value = calloc(sizeof(String), 1);
+			*value = getOperand(expression, ((Token*)walker->data)->start, ((Token*)walker->data)->end);
 			enqueue(&q, value);
 		}
 
@@ -171,8 +171,6 @@ String toPostfix (LinkedList *list, String expression, Stack stack, Queue q) {
 	}
 
 	expr = generateExpression(stack, q);
-
-	printf("%s\n", expr);
 
 	return expr;
 }
@@ -192,7 +190,6 @@ String getOperand(String expression, int start, int end) {
 
 String generateExpression (Stack stack, Queue q) {
 	String expr = stringifyQueue(q), stackExpr = stringifyStack(stack);
-	// printf("%s\n", expr);
 	return strcat(expr, stackExpr);
 }
 
@@ -201,12 +198,9 @@ String stringifyQueue (Queue q) {
 
 	while(q.list->count > 0){
 		op = *(String*)dequeue(&q);
-		// printf("------%s\n", op);
 		strcat(expression, op);
 		strcat(expression, " ");
 	}
-
-	// printf("%s\n", expression);
 
 	return expression;
 }

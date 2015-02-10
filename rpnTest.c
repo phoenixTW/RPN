@@ -229,23 +229,23 @@ void test_generateToken_should_create_a_list_of_tokens () {
 	assertEqual(((Token*)list.head->next->next->next->next->data)->type, 2);
 }
 
-// void test_infixToPostfix_should_return_3_4_plus_for_3_plus_4 () {
-// 	LinkedList list = createList();
-// 	String expr = "3 + 4";
-// 	assertEqual(strcmp(infixToPostfix(expr), "3 4 +"), 0);
-// }
+void test_infixToPostfix_should_return_3_4_plus_for_3_plus_4 () {
+	LinkedList list = createList();
+	String expr = "3 + 4";
+	assertEqual(strcmp(infixToPostfix(expr), "3 4 +"), 0);
+}
 
-// void test_infixToPostfix_should_return_30_4_plus_for_30_plus_4 () {
-// 	LinkedList list = createList();
-// 	String expr = "30 + 4";
-// 	assertEqual(strcmp(infixToPostfix(expr), "30 4 +"), 0);
-// }
+void test_infixToPostfix_should_return_30_4_plus_for_30_plus_4 () {
+	LinkedList list = createList();
+	String expr = "30 + 4";
+	assertEqual(strcmp(infixToPostfix(expr), "30 4 +"), 0);
+}
 
-// void test_infixToPostfix_should_return_3_4_5_plus_plus_for_3_plus_4_plus_5 () {
-// 	LinkedList list = createList();
-// 	String expr = "3 + 4 + 5";
-// 	assertEqual(strcmp(infixToPostfix(expr), "3 4 5 + +"), 0);
-// }
+void test_infixToPostfix_should_return_3_4_5_plus_plus_for_3_plus_4_plus_5 () {
+	LinkedList list = createList();
+	String expr = "3 + 4 + 5";
+	assertEqual(strcmp(infixToPostfix(expr), "3 4 5 + +"), 0);
+}
 
 void test_stringifyQueue_should_return_1_1_for_a_queue_with_two_element_1_and_1 () {
 	Queue q = createQueue();
