@@ -2,6 +2,9 @@
 #include <stdlib.h>
 
 Result calculate(LinkedList*, String, Stack); //Local Function, need to be test later
+String generateExpression (Stack, Queue);
+String stringifyQueue (Queue);
+
 Result evaluate(String expression) {
 	Stack stack = createStack();
 	Result res = perform(stack, expression);
@@ -136,4 +139,76 @@ int multiply (int oparand1, int oparand2){
 
 int divide (int oparand1, int oparand2){
 	return oparand1 / oparand2;
+}
+
+String infixToPostfix (String expression) {
+	Stack stack = createStack();
+	Queue q = createQueue();
+	LinkedList list = createList();
+	generateToken(&list, expression);
+	return toPostfix(&list, expression, stack, q);
+}
+
+String toPostfix (LinkedList *list, String expression, Stack stack, Queue q) {
+	Node_ptr walker = list->head;
+	int *value;
+	String expr;
+
+	while(walker != NULL) {
+		if(((Token*)walker->data)->type == 1){
+			value = (void*)malloc(sizeof(int));
+			*value = getValue(expression, ((Token*)walker->data)->start, ((Token*)walker->data)->end);
+			enqueue(&q, value);
+		}
+
+		if(((Token*)walker->data)->type == 2) {
+			value = (void*)malloc(sizeof(int));
+			*value = getValue(expression, ((Token*)walker->data)->start, ((Token*)walker->data)->end);
+			push(&stack, value);			
+		}
+
+		walker = walker->next;
+	}
+	
+	expr = generateExpression(stack, q);
+
+	// printf("%s\n", expr);
+
+	return expr;
+}
+
+String generateExpression (Stack stack, Queue q) {
+	String expr = stringifyQueue(q);
+	String stackExpr = stringifyStack(stack);
+	return strcat(expr, stackExpr);
+}
+
+String stringifyQueue (Queue q) {
+	Node_ptr walker = *(q.front);
+	String queueExpr = (String)malloc(sizeof(char) * (q.list->count + 1));
+	int counter = -1;
+
+	while (walker != NULL) {
+		queueExpr[++counter] = '0' + *(int*)dequeue(&q);
+		walker = walker->next;
+
+		if(walker != NULL) queueExpr[++counter] = ' ';
+	}
+
+	queueExpr[++counter] = '\0';
+	return queueExpr;
+
+}
+
+String stringifyStack (Stack stack) {
+	String stackExpr = (String)malloc(sizeof(char) * (stack.list->count + 1));
+	int counter = -1;
+
+	while (stack.list->count > 0) {
+		stackExpr[++counter] = ' ';
+		stackExpr[++counter] = *(char*)pop(&stack);
+	}
+
+	stackExpr[++counter] = '\0';
+	return stackExpr;
 }

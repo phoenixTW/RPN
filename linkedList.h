@@ -1,3 +1,6 @@
+#ifndef LINKEDLIST_H_
+#define LINKEDLIST_H_
+
 typedef struct linkedList LinkedList;
 typedef struct node Node;
 typedef struct students Students;
@@ -33,3 +36,5 @@ int indexOf(LinkedList, void *);
 void * deleteElementAt(LinkedList*, int);
 int asArray(LinkedList, void **);
 LinkedList * filter(LinkedList, int (*)(void *));
+
+#endif

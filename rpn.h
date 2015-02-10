@@ -1,4 +1,8 @@
 #include "stackLib.h"
+#include "queueLib.h"
+
+#ifndef RPN_HEADERS
+#define RPN_HEADERS
 
 typedef char* String;
 typedef struct result Result;
@@ -28,4 +32,6 @@ int isWhiteSpace (char);
 Result perform(Stack, String);
 void generateToken(LinkedList*, String);
 Token* create_token(int, int, int);
-Result calculate(LinkedList*, String, Stack);
+String infixToPostfix (String);
+
+#endif
