@@ -172,9 +172,10 @@ String toPostfix (LinkedList *list, String expression, Stack stack, Queue q) {
 		}
 
 		if(((Token*)walker->data)->type == 2) {
-			operatorValue = calloc(sizeof(int), 1);
-			*operatorValue = getValue(expression, ((Token*)walker->data)->start, ((Token*)walker->data)->end);
-			push(&stack, operatorValue);
+			handleOperands(&stack, &q, expression, walker);
+			// operatorValue = calloc(sizeof(int), 1);
+			// *operatorValue = getValue(expression, ((Token*)walker->data)->start, ((Token*)walker->data)->end);
+			// push(&stack, operatorValue);
 		}
 
 		walker = walker->next;
@@ -183,6 +184,12 @@ String toPostfix (LinkedList *list, String expression, Stack stack, Queue q) {
 	expr = generateExpression(stack, q);
 
 	return expr;
+}
+
+void handleOperands (Stack *stack, Queue *q, String expression, Node_ptr walker) {
+	String operatorValue = calloc(sizeof(int), 1);
+	*operatorValue = getValue(expression, ((Token*)walker->data)->start, ((Token*)walker->data)->end);
+	push(stack, operatorValue);
 }
 
 String getOperand(String expression, int start, int end) {
