@@ -185,16 +185,17 @@ String toPostfix (LinkedList *list, String expression, Stack stack, Queue q) {
 
 void handleOperands (Stack *stack, Queue *q, String expression, Node_ptr walker) {
 	String *operatorValue, *prevValue;
-	operatorValue = calloc(sizeof(String), 1); prevValue = calloc(sizeof(char), 1);
+	operatorValue = calloc(sizeof(String), 1); prevValue = calloc(sizeof(String), 1);
 	*operatorValue = getOperand(expression, ((Token*)walker->data)->start, ((Token*)walker->data)->end);
-	if(stack->list->count != 0)
-		*prevValue = *(String*)pop(&stack);
+	
+	if(stack->list->count != 0){
+		prevValue = (String)(((Node_ptr)(stack->top))->data);
+	}
 
-	if ((*prevValue != NULL) && (getPrecidence(*operatorValue) < getPrecidence(*prevValue))) {
-		// printf("Inside the if\n");
+
+	if ((stack->list->count > 0) && (getPrecidence(*operatorValue) < getPrecidence(*prevValue))) {
 		enqueue(q, prevValue);
-		push(stack, operatorValue);
-		return;
+		pop(stack);
 	}
 
 	push(stack, *operatorValue);
@@ -242,8 +243,9 @@ String stringifyStack (Stack stack) {
 	return stackExpr;
 }
 
-int getPrecidence (String operator) {
-	switch(*operator) {
+int getPrecidence (String operatorVal) {
+	
+	switch(*operatorVal) {
 		case '+' : ;
 		case '-' : return 1;
 		case '/' : ;

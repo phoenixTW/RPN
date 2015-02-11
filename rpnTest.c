@@ -247,6 +247,12 @@ void test_infixToPostfix_should_return_3_4_5_plus_plus_for_3_plus_4_plus_5 () {
 	assertEqual(strcmp(infixToPostfix(expr), "3 4 5 + +"), 0);
 }
 
+void test_infixToPostfix_should_return_3_4_5_mul_plus_for_3_mul_4_plus_5 () {
+	LinkedList list = createList();
+	String expr = "3 * 4 + 5";
+	assertEqual(strcmp(infixToPostfix(expr), "3 4 * 5 +"), 0);
+}
+
 void test_stringifyQueue_should_return_1_1_for_a_queue_with_two_element_1_and_1 () {
 	Queue q = createQueue();
 	String data1 = "1", data2 = "1";
