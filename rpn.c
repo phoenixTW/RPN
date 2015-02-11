@@ -109,7 +109,17 @@ int isOperand (char character) {
 }
 
 int isOperator (char character) {
-	return ((character >= '*') && (character <= '/') && (character != ',')) ? 1 : 0;
+	String operands = "*/+-()?><";
+	int count = 0;
+
+	while(operands[count] != '\0') {
+		if(operands[count] == character)
+			return 1;
+
+		count++;
+	}
+
+	return 0;
 }
 
 int toDigit(char character) {
@@ -201,7 +211,7 @@ String stringifyQueue (Queue q) {
 		strcat(expression, op);
 		strcat(expression, " ");
 	}
-
+	
 	return expression;
 }
 

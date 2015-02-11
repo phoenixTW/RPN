@@ -195,7 +195,7 @@ void test_isOperator_should_return_1_for_division () {
 }
 
 void test_isOperator_should_return_0_for_greaterThan () {
-	assertEqual(isOperator('>'), 0);
+	assertEqual(isOperator(','), 0);
 }
 
 void test_isOperator_should_return_0_for_comma () {
