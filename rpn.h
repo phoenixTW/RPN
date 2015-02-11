@@ -33,5 +33,6 @@ Result perform(Stack, String);
 void generateToken(LinkedList*, String);
 Token* create_token(int, int, int);
 String infixToPostfix (String);
+int getPrecidence(String);
 
 #endif

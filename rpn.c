@@ -233,3 +233,15 @@ String stringifyStack (Stack stack) {
 
 	return stackExpr;
 }
+
+int getPrecidence (String operator) {
+	switch(*operator) {
+		case '+' : ;
+		case '-' : return 1;
+		case '/' : ;
+		case '*' : return 2;
+		case '(' : ;
+		case ')' : return 3;
+		default : return 0;
+	}
+}

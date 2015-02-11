@@ -328,3 +328,28 @@ void test_getOperand_should_return_40_for_3_plus_40 () {
 	String expression = "3 + 40";
 	assertEqual(strcmp(getOperand(expression, 4, 5), "40"), 0);	
 }
+
+void test_getPrecidence_should_return_1_for_plus () {
+	String operator = "+";
+	assertEqual(getPrecidence(operator), 1);
+}
+
+void test_getPrecidence_should_return_1_for_minus () {
+	String operator = "-";
+	assertEqual(getPrecidence(operator), 1);
+}
+
+void test_getPrecidence_should_return_2_for_multiply () {
+	String operator = "*";
+	assertEqual(getPrecidence(operator), 2);
+}
+
+void test_getPrecidence_should_return_2_for_division () {
+	String operator = "/";
+	assertEqual(getPrecidence(operator), 2);
+}
+
+void test_getPrecidence_should_return_3_for_starting_paranthesic () {
+	String operator = "(";
+	assertEqual(getPrecidence(operator), 3);
+}
